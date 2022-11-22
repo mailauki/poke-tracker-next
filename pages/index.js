@@ -1,11 +1,19 @@
+import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Item from '../components/Item'
 
 export default function Home() {
-  const data = [{id: 1}, {id: 2}, {id: 3}]
+  // const data = [{id: 1}, {id: 2}, {id: 3}]
+  const [data, setData] = React.useState([{id: 1}, {id: 2}, {id: 3}])
 
+  React.useEffect(() => {
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=9offset=0")
+    .then((r) => r.json())
+    .then((data) => setData(data.results))
+  }, [])
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +28,7 @@ export default function Home() {
         </h1>
 
         <ul>
-          {data.map((item) => <Item key={item.id} item={item} />)}
+          {data.map((item) => <Item key={item.name} item={item} />)}
         </ul>
       </main>
 
