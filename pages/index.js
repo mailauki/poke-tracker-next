@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -15,13 +16,13 @@ export default function Home() {
         <h1><a href="/api/hello">Hello</a></h1>
         <ul>
           <li>
-            <a href="/api/items/1">Item 1</a>
+            <Link href="/api/items/1" as="/item/1">Item 1</Link>
           </li>
           <li>
-            <a href="/api/items/2">Item 2</a>
+            <Link href="/api/items/2" as="/item/2">Item 2</Link>
           </li>
           <li>
-            <a href="/api/items/3">Item 3</a>
+            <Link href="/api/items/3" as="/item/3">Item 3</Link>
           </li>
         </ul>
         {/* <h1 className={styles.title}>
