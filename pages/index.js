@@ -1,9 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import styles from '../styles/Home.module.css'
+import Item from '../components/Item'
 
 export default function Home() {
+  const data = [{id: 1}, {id: 2}, {id: 3}]
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,58 +15,13 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1><a href="/api/hello">Hello</a></h1>
-        <ul>
-          <li>
-            <Link href="/api/items/1" as="/item/1">Item 1</Link>
-          </li>
-          <li>
-            <Link href="/api/items/2" as="/item/2">Item 2</Link>
-          </li>
-          <li>
-            <Link href="/api/items/3" as="/item/3">Item 3</Link>
-          </li>
-        </ul>
-        {/* <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        <h1>
+          <a href="/api/hello">Hello</a>
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */}
+        <ul>
+          {data.map((item) => <Item key={item.id} item={item} />)}
+        </ul>
       </main>
 
       <footer className={styles.footer}>
