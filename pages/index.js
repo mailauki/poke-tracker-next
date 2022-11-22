@@ -12,7 +12,19 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1><a href="/api/hello">Hello</a></h1>
+        <ul>
+          <li>
+            <a href="/api/items/1">Item 1</a>
+          </li>
+          <li>
+            <a href="/api/items/2">Item 2</a>
+          </li>
+          <li>
+            <a href="/api/items/3">Item 3</a>
+          </li>
+        </ul>
+        {/* <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
@@ -51,7 +63,7 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
-        </div>
+        </div> */}
       </main>
 
       <footer className={styles.footer}>
