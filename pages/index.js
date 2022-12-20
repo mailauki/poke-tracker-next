@@ -5,14 +5,18 @@ import styles from '../styles/Home.module.css'
 import Item from '../components/Item'
 
 export default function Home() {
-  // const data = [{id: 1}, {id: 2}, {id: 3}]
   const [data, setData] = React.useState([{id: 1}, {id: 2}, {id: 3}])
+  const [next, setNext] = React.useState("")
+  const [url, setUrl] = React.useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
 
   React.useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=9offset=0")
+    fetch(url)
     .then((r) => r.json())
-    .then((data) => setData(data.results))
-  }, [])
+    .then((data) => {
+      setData(data.results)
+      setNext(data.next)
+    })
+  }, [url])
   
   return (
     <div className={styles.container}>
@@ -30,6 +34,8 @@ export default function Home() {
         <ul>
           {data.map((item) => <Item key={item.name} item={item} />)}
         </ul>
+
+        <button onClick={() => setUrl(next)}>Load More</button>
       </main>
 
       <footer className={styles.footer}>
