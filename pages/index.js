@@ -31,7 +31,7 @@ export default function Home() {
           <a href="/api/hello">Hello</a>
         </h1>
 
-        <ul>
+        <ul className={styles.grid}>
           {data.map((pokemon) => <Pokemon key={pokemon.name} pokemon={pokemon} />)}
         </ul>
 
