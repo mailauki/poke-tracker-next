@@ -3,21 +3,34 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Pokemon from '../components/Pokemon'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 export default function Home() {
-  const [data, setData] = React.useState([{id: 1}, {id: 2}, {id: 3}])
-  const [next, setNext] = React.useState("")
-  const [url, setUrl] = React.useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
+  const [pokemons, setPokemons] = React.useState([{id: 1}, {id: 2}, {id: 3}])
+  const [next, setNext] = React.useState(null)
+  // const [url, setUrl] = React.useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
   const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
-    fetch(url)
+    fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
     .then((r) => r.json())
     .then((data) => {
-      setData(data.results)
+      setPokemons(data.results)
       setNext(data.next)
     })
-  }, [url])
+  }, [])
+
+  function append() {
+    fetch(next)
+    .then((r) => r.json())
+    .then((data) => {
+      setPokemons([...pokemons, data.results].flat())
+      setNext(data.next)
+    })
+  }
   
   return (
     <div className={styles.container}>
@@ -28,22 +41,42 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1>
+        {/* <h1>
           <a href="/api/hello">Hello</a>
-        </h1>
+        </h1> */}
 
-        <ul className={open ? styles.list : styles.grid}>
-          {data.map((pokemon) => (
-            <Pokemon 
-              key={pokemon.name} 
-              pokemon={pokemon} 
-              open={open} 
-              onOpen={(open) => setOpen(open)} 
-            />
-          ))}
-        </ul>
+        {!open ? (
+          <ul className={open ? styles.list : styles.grid}>
+            {pokemons.map((pokemon) => (
+              <Pokemon 
+                key={pokemon.name} 
+                pokemon={pokemon} 
+                open={open} 
+                onOpen={(open) => setOpen(open)} 
+              />
+            ))}
+          </ul>
+        ) : (
+          <Swiper 
+            className={styles.swiper}
+            modules={[Navigation]}
+            navigation
+            onReachEnd={() => append()}
+            onSwiper={(swiper) => swiper.slideTo(open-1)}
+          >
+            {pokemons.map((pokemon) => (
+              <SwiperSlide className={styles.slide} key={pokemon.name}>
+                <Pokemon 
+                  pokemon={pokemon} 
+                  open={open} 
+                  onOpen={(open) => setOpen(open)} 
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
 
-        <button onClick={() => setUrl(next)}>Load More</button>
+        <button onClick={() => append()}>Load More</button>
       </main>
 
       <footer className={styles.footer}>

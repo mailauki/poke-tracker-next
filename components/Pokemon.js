@@ -16,12 +16,14 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
       })
     }
   }, [pokemon])
-  console.log(info)
+
+  // console.log(info)
 
   return (
-    <li className={styles.card} onClick={() => onOpen(!open)}>
+    <li className={styles.card} onClick={() => onOpen(info.id)}>
       <img src={info ? info.sprites.front_default : ""} width={open ? "200px" : ""} />
       <h3>{pokemon.name}</h3>
+      {info ? <p>{info.id}</p> : <></>}
       <div className={styles.row}>
         {info && open ? (
           info.types.map((type) => <p>{type.type.name}</p>)
