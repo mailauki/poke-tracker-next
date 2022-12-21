@@ -73,10 +73,25 @@
   max-width: 800px;
 }
 
+.list {
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
+  max-width: 800px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 .card {
   margin: 1rem;
   padding: 1.5rem;
-  text-align: left;
+  /* text-align: left; */
+  text-align: center;
   color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;

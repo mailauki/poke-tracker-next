@@ -8,6 +8,7 @@ export default function Home() {
   const [data, setData] = React.useState([{id: 1}, {id: 2}, {id: 3}])
   const [next, setNext] = React.useState("")
   const [url, setUrl] = React.useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
+  const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
     fetch(url)
@@ -31,8 +32,15 @@ export default function Home() {
           <a href="/api/hello">Hello</a>
         </h1>
 
-        <ul className={styles.grid}>
-          {data.map((pokemon) => <Pokemon key={pokemon.name} pokemon={pokemon} />)}
+        <ul className={open ? styles.list : styles.grid}>
+          {data.map((pokemon) => (
+            <Pokemon 
+              key={pokemon.name} 
+              pokemon={pokemon} 
+              open={open} 
+              onOpen={(open) => setOpen(open)} 
+            />
+          ))}
         </ul>
 
         <button onClick={() => setUrl(next)}>Load More</button>
