@@ -44,18 +44,27 @@ export default function Home() {
         {/* <h1>
           <a href="/api/hello">Hello</a>
         </h1> */}
+        <header className={styles.header}>
+          <h1 onClick={() => setOpen(!open)} className={styles.title}>
+            <a href="#">Pokemon</a>
+          </h1>
+        </header>
 
         {!open ? (
-          <ul className={open ? styles.list : styles.grid}>
-            {pokemons.map((pokemon) => (
-              <Pokemon 
-                key={pokemon.name} 
-                pokemon={pokemon} 
-                open={open} 
-                onOpen={(open) => setOpen(open)} 
-              />
-            ))}
-          </ul>
+          <>
+            <ul className={open ? styles.list : styles.grid}>
+              {pokemons.map((pokemon) => (
+                <Pokemon 
+                  key={pokemon.name} 
+                  pokemon={pokemon} 
+                  open={open} 
+                  onOpen={(open) => setOpen(open)} 
+                />
+              ))}
+            </ul>
+            
+            <button onClick={() => append()}>Load More</button>
+          </>
         ) : (
           <Swiper 
             className={styles.swiper}
@@ -76,7 +85,6 @@ export default function Home() {
           </Swiper>
         )}
 
-        <button onClick={() => append()}>Load More</button>
       </main>
 
       <footer className={styles.footer}>

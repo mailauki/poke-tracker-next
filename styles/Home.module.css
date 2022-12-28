@@ -12,6 +12,21 @@
   align-items: center;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem 0;
+  border-bottom: 1px solid #222;
+  background-color: #000;
+}
+
 .footer {
   display: flex;
   flex: 1;
@@ -29,21 +44,22 @@
 }
 
 .title a {
-  color: #0070f3;
+  /* color: #0070f3; */
   text-decoration: none;
 }
 
 .title a:hover,
 .title a:focus,
 .title a:active {
-  text-decoration: underline;
+  color: #0070f3;
+  /* text-decoration: underline; */
 }
 
-.title {
+/* .title {
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
-}
+} */
 
 .title,
 .description {
