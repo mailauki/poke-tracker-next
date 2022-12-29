@@ -22,7 +22,7 @@
   flex: 1;
   padding: 0 2rem;
   border-bottom: 1px solid #eaeaea;
-  background-color: #fff;
+  backdrop-filter: blur(30px);
   align-items: center;
   justify-content: left;
 }
@@ -53,14 +53,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .header .title:hover {
   color: #0070f3;
-}
-
-.title {
-  cursor: pointer;
 }
 
 .title,
@@ -149,21 +146,11 @@
   margin-left: 0.5rem;
 }
 
-/* @media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-} */
-
 @media (prefers-color-scheme: dark) {
   .card,
   .footer,
   .header {
     border-color: #222;
-  }
-  .header {
-    background: #000;
   }
   .code {
     background: #111;

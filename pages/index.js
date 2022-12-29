@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Header from '../components/Header'
 import Pokemon from '../components/Pokemon'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
@@ -54,23 +55,7 @@ export default function Home() {
         {/* <link rel="icon" href="/pokeball.png" media="(prefers-color-scheme: no-preference)" type="image/png" /> */}
       </Head>
 
-      <header className={styles.header}>
-        {/* <img 
-          src={prefersDarkMode ? "/pokeball-dark.png" : "/pokeball.png"}
-          onClick={() => setOpen(!open)} 
-        /> */}
-        <div onClick={() => setOpen(false)} className={styles.title}>
-          <svg width="2rem" height="2rem" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0,128) scale(0.1,-0.1)" fill="currentColor" stroke="none">
-              <path d="M506 1155 c-235 -65 -396 -274 -396 -515 0 -293 236 -529 529 -530 294 0 531 235 531 530 0 242 -164 454 -396 514 -74 19 -200 19 -268 1z m213 -95 c162 -31 319 -183 338 -329 l6 -41 -106 0 -107 0 -19 38 c-38 74 -113 122 -191 122 -78 0 -153 -48 -191 -122 l-19 -38 -107 0 -106 0 6 41 c13 101 120 240 222 289 94 45 180 58 274 40z m-29 -325 c32 -17 60 -61 60 -95 0 -53 -57 -110 -110 -110 -34 0 -78 28 -95 60 -19 37 -19 63 0 100 28 54 90 73 145 45z m-241 -182 c38 -75 113 -123 191 -123 78 0 153 48 191 123 l19 37 107 0 106 0 -6 -41 c-8 -64 -56 -149 -116 -210 -169 -168 -433 -168 -602 0 -60 61 -108 146 -116 210 l-6 41 106 0 107 0 19 -37z"/>
-            </g>
-          </svg>
-
-          <h1>
-            Pokemon
-          </h1>
-        </div>
-      </header>
+      <Header onOpen={setOpen} />
 
       <main className={styles.main}>
         {/* <h1>
@@ -79,7 +64,7 @@ export default function Home() {
 
         {!open ? (
           <>
-            <ul className={open ? styles.list : styles.grid}>
+            <ul className={styles.grid}>
               {pokemons.map((pokemon) => (
                 <Pokemon 
                   key={pokemon.name} 
