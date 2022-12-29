@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
-import { CircularProgress, Box } from '@mui/material'
+import Pokeball from '../components/icons/Pokeball'
+import { CircularProgress, Box, Chip, Typography, Checkbox } from '@mui/material'
 
 export default function PersonComponent({ pokemon, open, onOpen }) {
   const [info, setInfo] = React.useState(null)
@@ -29,6 +30,27 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
 
   return (
     <li className={styles.card} onClick={() => onOpen(info.id)}>
+      <Box className={styles.row}>
+        <Checkbox 
+          icon={<Pokeball size="1.5rem" />}
+          checkedIcon={<Pokeball size="1.5rem" />}
+          sx={{
+            '&.Mui-checked': {
+              color: "red"
+            }
+          }}
+        />
+
+        {info ? (
+          <Chip 
+            label={`#${padZero(info.id)}`} 
+            sx={{ width: "fit-content" }} 
+          />
+        ) : (
+          <></>
+        )}
+      </Box>
+
       {info ? (
         <Image 
           src={info.sprites.front_default} 
@@ -49,17 +71,20 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
         </Box>
       )}
 
-      <h3>{pokemon.name}</h3>
+      <Typography variant="h6">{pokemon.name}</Typography>
 
-      {info ? <p>{`#${padZero(info.id)}`}</p> : <></>}
-
-      <div className={styles.row}>
+      <Box 
+        className={styles.row} 
+        sx={{ justifyContent: "space-evenly" }}
+      >
         {info && open ? (
-          info.types.map((type) => <p>{type.type.name}</p>)
+          info.types.map((type) => (
+            <Chip label={type.type.name} variant="outlined" />
+          ))
         ) : (
           <></>
         )}
-      </div>
+      </Box>
     </li>
   )
 }
