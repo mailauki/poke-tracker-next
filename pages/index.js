@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 import Pokemon from '../components/Pokemon'
@@ -8,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { createTheme, ThemeProvider, useMediaQuery, CssBaseline } from '@mui/material'
+import { createTheme, ThemeProvider, useMediaQuery, CssBaseline, Button } from '@mui/material'
 
 export default function Home() {
   const [pokemons, setPokemons] = React.useState([{id: 1}, {id: 2}, {id: 3}])
@@ -45,7 +44,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
+
       <div className={styles.container}>
         <Head>
           <title>PokeTracker</title>
@@ -78,7 +77,12 @@ export default function Home() {
                 ))}
               </ul>
               
-              <button onClick={() => append()}>Load More</button>
+              <Button 
+                onClick={() => append()} 
+                variant="outlined"
+              >
+                Load More
+              </Button>
             </>
           ) : (
             <Swiper 
@@ -100,19 +104,6 @@ export default function Home() {
             </Swiper>
           )}
         </main>
-
-        <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by{' '}
-            <span className={styles.logo}>
-              <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-            </span>
-          </a>
-        </footer>
       </div>
     </ThemeProvider>
   )

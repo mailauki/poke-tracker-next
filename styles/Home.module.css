@@ -108,7 +108,6 @@
 .row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -121,18 +120,25 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  /* max-width: 300px; */
-  width: 200px;
+  /* min-width: 150px;
+  max-width: 300px; */
+  /* width: 200px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.card:hover,
+/* .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
+  border-color: #0070f3;
+} */
+
+.open:hover,
+.open:focus,
+.open:active {
+  /* color: #0070f3; */
   border-color: #0070f3;
 }
 

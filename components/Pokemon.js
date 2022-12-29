@@ -6,6 +6,7 @@ import { CircularProgress, Box, Chip, Typography, Checkbox } from '@mui/material
 
 export default function PersonComponent({ pokemon, open, onOpen }) {
   const [info, setInfo] = React.useState(null)
+  const [checked, setChecked] = React.useState(false)
   const size = open ? 200 : 100
 
   React.useEffect(() => {
@@ -29,8 +30,23 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
   }
 
   return (
-    <li className={styles.card} onClick={() => onOpen(info.id)}>
-      <Box className={styles.row}>
+    <li 
+      className={`${styles.card} ${!open ? styles.open : ""}`} 
+      onClick={(e) => {
+        e.target.type === "checkbox" ? (
+          setChecked(!checked)
+        ) : (
+          onOpen(info.id)
+        )
+      }}
+      style={{ 
+        width: open ? "300px" : "150px"
+      }}
+    >
+      <Box 
+        className={styles.row}
+        sx={{ justifyContent: "space-between" }}
+      >
         <Checkbox 
           icon={<Pokeball size="1.5rem" />}
           checkedIcon={<Pokeball size="1.5rem" />}
@@ -39,6 +55,7 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
               color: "red"
             }
           }}
+          checked={checked}
         />
 
         {info ? (
@@ -79,7 +96,11 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
       >
         {info && open ? (
           info.types.map((type) => (
-            <Chip label={type.type.name} variant="outlined" />
+            <Chip 
+              key={type.type.name}
+              label={type.type.name} 
+              variant="outlined" 
+            />
           ))
         ) : (
           <></>
