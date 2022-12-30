@@ -8,12 +8,15 @@ import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { createTheme, ThemeProvider, useMediaQuery, CssBaseline, Button } from '@mui/material'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 export default function Home() {
   const [pokemons, setPokemons] = React.useState([{id: 1}, {id: 2}, {id: 3}])
+  const [checks, setChecks] = React.useState([])
   const [next, setNext] = React.useState(null)
   const [open, setOpen] = React.useState(false)
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
+  const supabase = useSupabaseClient()
 
   const theme = React.useMemo(
     () => createTheme({
@@ -40,6 +43,29 @@ export default function Home() {
       setNext(data.next)
     })
   }
+
+  React.useEffect(() => {
+    getPokemon()
+  }, [])
+
+  async function getPokemon() {
+    let { data } = await supabase
+      .from('pokemon')
+      .select('*')
+
+    // console.log(data)
+    setChecks(data)
+  }
+
+  // console.log(checks.find((check) => 1 === check.id).isCollected)
+  // console.log(pokemons.map((pokemon) => checks.find((check) => pokemon.name === check.name)))
+  const result = pokemons.map((pokemon) => (
+    checks.find((check) => (
+      pokemon.name === check.name
+    ))
+  ))
+
+  console.log(result !== "undefined" ? result.isCollected : false)
   
   return (
     <ThemeProvider theme={theme}>
@@ -73,6 +99,7 @@ export default function Home() {
                     pokemon={pokemon} 
                     open={open} 
                     onOpen={(open) => setOpen(open)} 
+                    checked={checks.find((check) => pokemon.name === check.name)}
                   />
                 ))}
               </ul>

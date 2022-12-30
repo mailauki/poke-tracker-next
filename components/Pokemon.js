@@ -4,9 +4,9 @@ import Image from 'next/image'
 import Pokeball from '../components/icons/Pokeball'
 import { CircularProgress, Box, Chip, Typography, Checkbox } from '@mui/material'
 
-export default function PersonComponent({ pokemon, open, onOpen }) {
+export default function PersonComponent({ pokemon, open, onOpen, checked }) {
   const [info, setInfo] = React.useState(null)
-  const [checked, setChecked] = React.useState(false)
+  // const [checked, setChecked] = React.useState(false)
   const size = open ? 200 : 100
 
   React.useEffect(() => {
@@ -34,7 +34,8 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
       className={`${styles.card} ${!open ? styles.open : ""}`} 
       onClick={(e) => {
         e.target.type === "checkbox" ? (
-          setChecked(!checked)
+          // setChecked(!checked)
+          console.log(info.id)
         ) : (
           onOpen(info.id)
         )
@@ -55,7 +56,7 @@ export default function PersonComponent({ pokemon, open, onOpen }) {
               color: "red"
             }
           }}
-          checked={checked}
+          checked={checked ? checked.isCollected : false}
         />
 
         {info ? (
