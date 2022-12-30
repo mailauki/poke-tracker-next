@@ -53,12 +53,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
+  pointer-events: none;
 }
 
-.header .title:hover {
+/* .header .title:hover {
   color: #0070f3;
-}
+} */
 
 .title,
 .description {
@@ -129,17 +130,11 @@
   justify-content: center;
 }
 
-/* .card:hover,
-.card:focus,
-.card:active {
-  border-color: #0070f3;
-} */
-
 .open:hover,
 .open:focus,
 .open:active {
-  /* color: #0070f3; */
   border-color: #0070f3;
+  cursor: pointer;
 }
 
 .card h2 {

@@ -1,16 +1,24 @@
 import styles from '../styles/Home.module.css'
 import Pokeball from '../components/icons/Pokeball'
+import { Box, IconButton, Typography } from '@mui/material'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-export default function Header({ onOpen }) {
+export default function Header({ open, onOpen }) {
   return (
     <header className={styles.header}>
-      <div onClick={() => onOpen(false)} className={styles.title}>
-        <Pokeball size="2rem" />
+      {!open ? (
+        <Box className={styles.title}>
+          <Pokeball size="2rem" />
 
-        <h1>
-          Pokemon
-        </h1>
-      </div>
+          <Typography variant="h4">
+            PokeTracker
+          </Typography>
+        </Box>
+      ) : (
+        <IconButton onClick={() => onOpen(false)}>
+          <ArrowBackIosNewIcon />
+        </IconButton>
+      )}
     </header>
   )
 }

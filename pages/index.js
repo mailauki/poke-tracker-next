@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider, useMediaQuery, CssBaseline, Button } from '
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 export default function Home() {
-  const [pokemons, setPokemons] = React.useState([{id: 1}, {id: 2}, {id: 3}])
+  const [pokemons, setPokemons] = React.useState([{id: 1}])
   const [checks, setChecks] = React.useState([])
   const [next, setNext] = React.useState(null)
   const [open, setOpen] = React.useState(false)
@@ -53,19 +53,8 @@ export default function Home() {
       .from('pokemon')
       .select('*')
 
-    // console.log(data)
     setChecks(data)
   }
-
-  // console.log(checks.find((check) => 1 === check.id).isCollected)
-  // console.log(pokemons.map((pokemon) => checks.find((check) => pokemon.name === check.name)))
-  const result = pokemons.map((pokemon) => (
-    checks.find((check) => (
-      pokemon.name === check.name
-    ))
-  ))
-
-  console.log(result !== "undefined" ? result.isCollected : false)
   
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +72,7 @@ export default function Home() {
           {/* <link rel="icon" href="/pokeball.png" media="(prefers-color-scheme: no-preference)" type="image/png" /> */}
         </Head>
 
-        <Header onOpen={setOpen} />
+        <Header open={open} onOpen={setOpen} />
 
         <main className={styles.main}>
           {/* <h1>
