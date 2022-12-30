@@ -41,7 +41,8 @@ export default function PersonComponent({ pokemon, open, onOpen, checked }) {
         )
       }}
       style={{ 
-        width: open ? "300px" : "150px"
+        width: open ? "300px" : "150px",
+        height: open ? "300px" : "150px"
       }}
     >
       <Box 
@@ -69,44 +70,69 @@ export default function PersonComponent({ pokemon, open, onOpen, checked }) {
         )}
       </Box>
 
-      {info ? (
-        <Image 
-          src={info.sprites.front_default} 
-          alt={pokemon ? pokemon.name : "pokemon sprite"} 
-          width={size} height={size} 
-        />
-      ) : (
-        <Box 
-          width={`${size}px`} 
-          height={`${size}px`} 
-          sx={{ 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      )}
-
-      <Typography variant="h6">{pokemon.name}</Typography>
-
+        
       <Box 
-        className={styles.row} 
-        sx={{ justifyContent: "space-evenly" }}
+        className={styles.sprite}
+        width={`${size}px`} 
+        height={`${size}px`} 
+        sx={{ 
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
+        {info ? (
+          <Image 
+            src={info.sprites.front_default} 
+            alt={pokemon ? pokemon.name : "pokemon sprite"} 
+            width={size} height={size}
+          />
+        ) : (
+          <CircularProgress />
+        )}
+      </Box>
+
+      <Box width="100%">
+        <Typography variant="h6">{pokemon.name}</Typography>
+        
         {info && open ? (
-          info.types.map((type) => (
-            <Chip 
-              key={type.type.name}
-              label={type.type.name} 
-              variant="outlined" 
-            />
-          ))
+          <Box 
+            className={styles.row} 
+            sx={{ justifyContent: "space-evenly" }}
+          >
+            {info.types.map((type) => (
+              <Chip 
+                key={type.type.name}
+                label={type.type.name} 
+                variant="outlined" 
+              />
+            ))}
+          </Box>
         ) : (
           <></>
         )}
       </Box>
+
+      {/* {open ? (
+        <Box 
+          className={styles.row} 
+          sx={{ justifyContent: "space-evenly" }}
+        >
+          {info ? (
+            info.types.map((type) => (
+              <Chip 
+                key={type.type.name}
+                label={type.type.name} 
+                variant="outlined" 
+              />
+            ))
+          ) : (
+            <></>
+          )}
+        </Box>
+      ) : (
+        <></>
+      )} */}
     </li>
   )
 }

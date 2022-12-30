@@ -114,7 +114,8 @@
 
 .card {
   margin: 1rem;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
+  padding: 0.5rem;
   text-align: center;
   color: inherit;
   text-decoration: none;
@@ -127,7 +128,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card .sprite {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  margin: 25px;
 }
 
 .open:hover,
@@ -137,32 +146,10 @@
   cursor: pointer;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
 @media (prefers-color-scheme: dark) {
   .card,
   .footer,
   .header {
     border-color: #222;
-  }
-  .code {
-    background: #111;
-  }
-  .logo img {
-    filter: invert(1);
   }
 }

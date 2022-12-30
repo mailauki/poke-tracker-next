@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Pokeball from '../components/icons/Pokeball'
 import { Box, IconButton, Typography } from '@mui/material'
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 
 export default function Header({ open, onOpen }) {
   return (
