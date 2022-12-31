@@ -1,24 +1,27 @@
-import React from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 import Pokemon from '../components/Pokemon'
+import Account from '../components/Account'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { createTheme, ThemeProvider, useMediaQuery, CssBaseline, Button } from '@mui/material'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 
 export default function Home() {
-  const [pokemons, setPokemons] = React.useState([{id: 1}])
-  const [checks, setChecks] = React.useState([])
-  const [next, setNext] = React.useState(null)
-  const [open, setOpen] = React.useState(false)
+  const [pokemons, setPokemons] = useState([{id: 1}])
+  const [checks, setChecks] = useState([])
+  const [next, setNext] = useState(null)
+  const [open, setOpen] = useState(false)
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
   const supabase = useSupabaseClient()
+  const session = useSession()
 
-  const theme = React.useMemo(
+  const theme = useMemo(
     () => createTheme({
       palette: {
         mode: prefersDarkMode ? "dark" : "light"
@@ -26,7 +29,7 @@ export default function Home() {
     }), [prefersDarkMode]
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
     .then((r) => r.json())
     .then((data) => {
@@ -44,7 +47,7 @@ export default function Home() {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getPokemon()
   }, [])
 
@@ -79,7 +82,15 @@ export default function Home() {
             <a href="/api/hello">Hello</a>
           </h1> */}
 
-          {!open ? (
+          <div style={{ padding: '50px 0 100px 0' }}>
+            {!session ? (
+              <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme={theme.palette.mode} />
+            ) : (
+              <Account session={session} />
+            )}
+          </div>
+
+          {/* {!open ? (
             <>
               <ul className={styles.grid}>
                 {pokemons.map((pokemon) => (
@@ -118,7 +129,7 @@ export default function Home() {
                 </SwiperSlide>
               ))}
             </Swiper>
-          )}
+          )} */}
         </main>
       </div>
     </ThemeProvider>
