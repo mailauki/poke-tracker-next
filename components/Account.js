@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import AvatarForm from './Avatar'
+import { Button, TextField, Box } from '@mui/material'
 
 export default function Account({ session }) {
   const supabase = useSupabaseClient()
@@ -61,8 +63,8 @@ export default function Account({ session }) {
   }
 
   return (
-    <div className="form-widget">
-      <div>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      {/* <div>
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session.user.email} disabled />
       </div>
@@ -74,23 +76,49 @@ export default function Account({ session }) {
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </div>
+      </div> */}
+      <TextField 
+        id="email" 
+        label="Email" 
+        variant="outlined" 
+        value={session.user.email} 
+        disabled
+        margin="normal"
+      />
+      <TextField 
+        id="username" 
+        label="Username" 
+        variant="outlined" 
+        value={username || ""} 
+        onChange={(e) => setUsername(e.target.value)}
+        margin="normal"
+      />
+      <AvatarForm
+        uid={user.id}
+        url={avatar_url}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url)
+          updateProfile({ username, avatar_url: url })
+        }}
+      />
 
-      <div>
-        <button
-          className="button primary block"
-          onClick={() => updateProfile({ username, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+      <Button
+        onClick={() => updateProfile({ username, avatar_url })}
+        disabled={loading}
+        variant="contained"
+        sx={{ mt: 1 }}
+      >
+        {loading ? 'Loading ...' : 'Update'}
+      </Button>
 
-      <div>
-        <button className="button block" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
-      </div>
-    </div>
+      <Button 
+        onClick={() => supabase.auth.signOut()}
+        variant="outlined"
+        sx={{ mt: 1 }}
+      >
+        Sign Out
+      </Button>
+    </Box>
   )
 }
