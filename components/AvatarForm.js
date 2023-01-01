@@ -61,7 +61,7 @@ export default function AvatarForm({ uid, url, size, onUpload }) {
         alt="Avatar" 
         sx={{ height: size, width: size, margin: "0 auto", backgroundColor: "divider" }}
       />
-      <Button variant="contained" component="label" sx={{ mt: 1 }}>
+      <Button variant="outlined" component="label" sx={{ mt: 1 }}>
         {uploading ? 'Uploading ...' : 'Upload'}
         <input 
           hidden 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import AvatarForm from './Avatar'
+import AvatarForm from './AvatarForm'
 import { Button, TextField, Box } from '@mui/material'
 
 export default function Account({ session }) {
@@ -64,19 +64,6 @@ export default function Account({ session }) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      {/* <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div> */}
       <TextField 
         id="email" 
         label="Email" 
@@ -88,7 +75,7 @@ export default function Account({ session }) {
       <TextField 
         id="username" 
         label="Username" 
-        variant="outlined" 
+        variant="outlined"
         value={username || ""} 
         onChange={(e) => setUsername(e.target.value)}
         margin="normal"
@@ -112,13 +99,13 @@ export default function Account({ session }) {
         {loading ? 'Loading ...' : 'Update'}
       </Button>
 
-      <Button 
+      {/* <Button 
         onClick={() => supabase.auth.signOut()}
         variant="outlined"
         sx={{ mt: 1 }}
       >
         Sign Out
-      </Button>
+      </Button> */}
     </Box>
   )
 }
