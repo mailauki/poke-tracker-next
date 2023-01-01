@@ -4,17 +4,15 @@ import { useRouter } from 'next/router'
 import Pokeball from '../components/icons/Pokeball'
 import { Box, Typography, AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Tooltip, Avatar } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import MenuIcon from '@mui/icons-material/Menu'
 import { useUser, useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
 
 export default function Header({ open, onOpen }) {
   const supabase = useSupabaseClient()
   const session = useSession()
   const user = useUser()
-  const [loading, setLoading] = useState(true)
   const [url, setUrl] = useState(null)
   const [avatarUrl, setAvatarUrl] = useState(null)
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+  const settings = ['Account', 'Logout']
   const [anchorEl, setAnchorEl] = useState(null)
   const router = useRouter()
 
@@ -23,7 +21,6 @@ export default function Header({ open, onOpen }) {
   }
 
   function handleCloseMenu(setting) {
-    console.log(setting)
     setAnchorEl(null)
 
     switch (setting) {
@@ -45,8 +42,6 @@ export default function Header({ open, onOpen }) {
 
   async function getAvatarUrl() {
     try {
-      setLoading(true)
-
       let { data, error, status } = await supabase
         .from('profiles')
         .select(`avatar_url`)
@@ -63,8 +58,6 @@ export default function Header({ open, onOpen }) {
     } catch (error) {
       alert('Error loading user data!')
       console.log(error)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -109,7 +102,6 @@ export default function Header({ open, onOpen }) {
                 sx={{
                   mr: 2,
                   display: { xs: "flex", md: "none" },
-                  fontFamily: "monospace",
                   fontWeight: 600,
                   letterSpacing: ".02rem",
                   color: "inherit",

@@ -9,6 +9,7 @@ export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     getProfile()
@@ -59,6 +60,7 @@ export default function Account({ session }) {
       console.log(error)
     } finally {
       setLoading(false)
+      router.push("/")
     }
   }
 
