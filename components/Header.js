@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
 import Pokeball from '../components/icons/Pokeball'
-import { Box, Typography, AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Tooltip, Avatar } from '@mui/material'
+import { Box, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Tooltip, Avatar, ThemeProvider, CssBaseline } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { useUser, useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
+import { useAppContext } from '../context/AppContext'
 
 export default function Header({ open, onOpen }) {
   const supabase = useSupabaseClient()
@@ -15,6 +16,7 @@ export default function Header({ open, onOpen }) {
   const settings = ['Account', 'Logout']
   const [anchorEl, setAnchorEl] = useState(null)
   const router = useRouter()
+  const { theme } = useAppContext()
 
   function handleOpenMenu(e) {
     setAnchorEl(e.currentTarget)
@@ -104,8 +106,7 @@ export default function Header({ open, onOpen }) {
                   display: { xs: "flex", md: "none" },
                   fontWeight: 600,
                   letterSpacing: ".02rem",
-                  color: "inherit",
-                  textDecoration: "none"
+                  color: "inherit"
                 }}
               >
                 PokeTracker
@@ -117,35 +118,35 @@ export default function Header({ open, onOpen }) {
           </Box>
 
           {session ? (
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open Settings">
-              <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
-                <Avatar src={avatarUrl} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseMenu(setting)}>
-                  <Typography>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open Settings">
+                <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
+                  <Avatar src={avatarUrl} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleCloseMenu(setting)}>
+                    <Typography>{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           ) : (
             <></>
           )}

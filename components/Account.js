@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
 import AvatarForm from './AvatarForm'
 import { Button, TextField, Box } from '@mui/material'
 
@@ -96,18 +97,10 @@ export default function Account({ session }) {
         onClick={() => updateProfile({ username, avatar_url })}
         disabled={loading}
         variant="contained"
-        sx={{ mt: 1 }}
+        sx={{ mt: 2 }}
       >
         {loading ? 'Loading ...' : 'Update'}
       </Button>
-
-      {/* <Button 
-        onClick={() => supabase.auth.signOut()}
-        variant="outlined"
-        sx={{ mt: 1 }}
-      >
-        Sign Out
-      </Button> */}
     </Box>
   )
 }
