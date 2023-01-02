@@ -1,6 +1,7 @@
-/* .container {
-  padding: 0 2rem;
-} */
+.container {
+  /* padding: 0 2rem; */
+  padding: 0;
+}
 
 .main {
   min-height: 100vh;
@@ -37,7 +38,7 @@
   flex-grow: 1;
 }
 
-.header .title svg {
+/* .header .title svg {
   height: 2rem; 
   margin-right: 10px;
   cursor: pointer;
@@ -59,7 +60,7 @@
   margin: 4rem 0;
   line-height: 1.5;
   font-size: 1.5rem;
-}
+} */
 
 .logo {
   width: fit-content;

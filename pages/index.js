@@ -10,6 +10,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Box, Button, createTheme, ThemeProvider, CssBaseline, useMediaQuery } from '@mui/material'
 import { useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
+import { useAppContext } from '../context/AppContext'
 
 export default function Home() {
   const [pokemons, setPokemons] = useState([{id: 1}])
@@ -18,15 +19,7 @@ export default function Home() {
   const [open, setOpen] = useState(false)
   const supabase = useSupabaseClient()
   const session = useSession()
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
-
-  const theme = useMemo(
-    () => createTheme({
-      palette: {
-        mode: prefersDarkMode ? "dark" : "light"
-      }
-    }), [prefersDarkMode]
-  )
+  const { theme } = useAppContext()
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
@@ -37,6 +30,10 @@ export default function Home() {
     })
   }, [])
 
+  useEffect(() => {
+    if(session) getPokemonChecks()
+  }, [session])
+
   function append() {
     fetch(next)
     .then((r) => r.json())
@@ -46,17 +43,15 @@ export default function Home() {
     })
   }
 
-  useEffect(() => {
-    getPokemon()
-  }, [])
-
-  async function getPokemon() {
-    let { data } = await supabase
+  async function getPokemonChecks() {
+    const { data } = await supabase
       .from('pokemon')
       .select('*')
+      .eq('user_id', session.user.id)
 
     setChecks(data)
   }
+
   
   return (
     <ThemeProvider theme={theme}>

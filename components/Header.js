@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
 import Pokeball from '../components/icons/Pokeball'
-import { Box, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Tooltip, Avatar, ThemeProvider, CssBaseline } from '@mui/material'
+import { Box, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Tooltip, Avatar, Button } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { useUser, useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
 import { useAppContext } from '../context/AppContext'
@@ -94,7 +94,7 @@ export default function Header({ open, onOpen }) {
             </IconButton>
           ) : (
             <Box className={styles.logo} href="/" component="a">
-              <Box sx={{ display: { xs: "flex", md: "none" }, mr: 0.75 }}>
+              <Box sx={{ mr: 0.75 }}>
                 <Pokeball size={30} />
               </Box>
               
@@ -103,7 +103,6 @@ export default function Header({ open, onOpen }) {
                 noWrap
                 sx={{
                   mr: 2,
-                  display: { xs: "flex", md: "none" },
                   fontWeight: 600,
                   letterSpacing: ".02rem",
                   color: "inherit"

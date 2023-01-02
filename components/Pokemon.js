@@ -1,15 +1,22 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 import Pokeball from '../components/icons/Pokeball'
 import { CircularProgress, Box, Chip, Typography, Checkbox } from '@mui/material'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
-export default function PersonComponent({ pokemon, open, onOpen, checked }) {
-  const [info, setInfo] = React.useState(null)
-  // const [checked, setChecked] = React.useState(false)
+export default function Pokemon({ pokemon, open, onOpen, checked }) {
+  const [info, setInfo] = useState(null)
+  const supabase = useSupabaseClient()
+  const session = useSession()
+  const [isCollected, setIsCollected] = useState(false)
   const size = open ? 200 : 100
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if(checked) setIsCollected(checked.is_collected)
+  }, [checked])
+
+  useEffect(() => {
     if(pokemon.url) {
       fetch(pokemon.url)
       .then((r) => r.json())
@@ -29,13 +36,44 @@ export default function PersonComponent({ pokemon, open, onOpen, checked }) {
     else return id
   }
 
+  async function updateCheck() {
+    // console.log(pokemon.name)
+    // console.log(isCollected)
+    // console.log(checked.id)
+
+    try {
+      const updates = checked ? {
+        id: checked.id,
+        name: pokemon.name, 
+        user_id: session.user.id, 
+        is_collected: !isCollected
+      } : {
+        name: pokemon.name, 
+        user_id: session.user.id, 
+        is_collected: true
+      }
+
+      const { data, error } = await supabase
+        .from('pokemon')
+        .upsert(updates)
+        .select('is_collected')
+
+      if (error) throw error
+      // alert('Checks updated!')
+
+      if(data) setIsCollected(data[0].is_collected)
+    } catch (error) {
+      alert('Error loading data!')
+      console.log(error)
+    }
+  } 
+
   return (
     <li 
       className={`${styles.card} ${!open ? styles.open : ""}`} 
       onClick={(e) => {
         e.target.type === "checkbox" ? (
-          // setChecked(!checked)
-          console.log(info.id)
+          updateCheck()
         ) : (
           onOpen(info.id)
         )
@@ -57,7 +95,7 @@ export default function PersonComponent({ pokemon, open, onOpen, checked }) {
               color: "red"
             }
           }}
-          checked={checked ? checked.isCollected : false}
+          checked={isCollected}
         />
 
         {info ? (
