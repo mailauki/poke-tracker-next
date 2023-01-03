@@ -33,7 +33,7 @@ export default function Pokemon({ pokemon, open, onOpen }) {
       .eq('user_id', session.user.id)
       .eq('name', pokemon.name)
 
-    setIsCollected(data[0].is_collected)
+    if(data && data[0]) setIsCollected(data[0].is_collected)
   }
 
   function padZero(id) {

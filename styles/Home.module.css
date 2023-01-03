@@ -66,15 +66,30 @@
 
 .swiper {
   width: 100%;
+  height: calc(300px + 4rem);
   text-align: center;
   overflow: hidden;
 }
 
 .slide {
   width: fit-content;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: black;
+  opacity: 0.2;
+  margin: 0 4px;
+  transition: 0.2s transform, 0.2s left;
+  position: relative;
+  white-space: nowrap;
 }
 
 .row {
@@ -121,5 +136,8 @@
   }
   .header {
     background-color: rgba(30,30,30,0.6);
+  }
+  .bullet {
+    background: white;
   }
 }

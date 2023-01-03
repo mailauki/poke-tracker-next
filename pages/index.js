@@ -5,9 +5,10 @@ import Header from '../components/Header'
 import PokemonCard from '../components/PokemonCard'
 import Auth from '../components/Auth'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper'
+import { Navigation, Mousewheel, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import "swiper/css/pagination"
 import { Button, ThemeProvider, CssBaseline } from '@mui/material'
 import { useSession } from '@supabase/auth-helpers-react'
 import { useAppContext } from '../context/AppContext'
@@ -15,7 +16,7 @@ import { useAppContext } from '../context/AppContext'
 export default function Home() {
   const [pokemons, setPokemons] = useState([{id: 1}])
   const [next, setNext] = useState(null)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const session = useSession()
   const { theme } = useAppContext()
 
@@ -82,8 +83,17 @@ export default function Home() {
             ) : (
               <Swiper 
                 className={styles.swiper}
-                modules={[Navigation]}
+                modules={[Navigation, Mousewheel, Pagination]}
                 navigation
+                mousewheel
+                pagination={{
+                  dynamicBullets: true,
+                  bulletClass: styles.bullet,
+                  type: 'bullets',
+                  renderBullet: function(index, className) {
+                    return '<span class="' + className + '"></span>'
+                  }
+                }}
                 onReachEnd={() => append()}
                 onSwiper={(swiper) => swiper.slideTo(open-1)}
               >
