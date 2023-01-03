@@ -1,23 +1,21 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
-import Pokemon from '../components/Pokemon'
+import PokemonCard from '../components/PokemonCard'
 import Auth from '../components/Auth'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { Box, Button, createTheme, ThemeProvider, CssBaseline, useMediaQuery } from '@mui/material'
-import { useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
+import { Button, ThemeProvider, CssBaseline } from '@mui/material'
+import { useSession } from '@supabase/auth-helpers-react'
 import { useAppContext } from '../context/AppContext'
 
 export default function Home() {
   const [pokemons, setPokemons] = useState([{id: 1}])
-  const [checks, setChecks] = useState([])
   const [next, setNext] = useState(null)
   const [open, setOpen] = useState(false)
-  const supabase = useSupabaseClient()
   const session = useSession()
   const { theme } = useAppContext()
 
@@ -30,10 +28,6 @@ export default function Home() {
     })
   }, [])
 
-  useEffect(() => {
-    if(session) getPokemonChecks()
-  }, [session])
-
   function append() {
     fetch(next)
     .then((r) => r.json())
@@ -42,16 +36,6 @@ export default function Home() {
       setNext(data.next)
     })
   }
-
-  async function getPokemonChecks() {
-    const { data } = await supabase
-      .from('pokemon')
-      .select('*')
-      .eq('user_id', session.user.id)
-
-    setChecks(data)
-  }
-
   
   return (
     <ThemeProvider theme={theme}>
@@ -78,14 +62,13 @@ export default function Home() {
               <>
                 <ul className={styles.grid}>
                   {pokemons.map((pokemon) => (
-                    <Box key={pokemon.name} >
-                      <Pokemon 
+                    <li key={pokemon.name}>
+                      <PokemonCard 
                         pokemon={pokemon} 
                         open={open} 
                         onOpen={(open) => setOpen(open)} 
-                        checked={checks.find((check) => pokemon.name === check.name)}
                       />
-                    </Box>
+                    </li>
                   ))}
                 </ul>
                 
@@ -106,7 +89,7 @@ export default function Home() {
               >
                 {pokemons.map((pokemon) => (
                   <SwiperSlide key={pokemon.name} className={styles.slide}>
-                    <Pokemon 
+                    <PokemonCard 
                       pokemon={pokemon} 
                       open={open} 
                       onOpen={(open) => setOpen(open)} 

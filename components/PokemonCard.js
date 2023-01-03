@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
-import Pokeball from '../components/icons/Pokeball'
+import Pokeball from './icons/Pokeball'
 import { CircularProgress, Box, Chip, Typography, Checkbox } from '@mui/material'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
-export default function Pokemon({ pokemon, open, onOpen, checked }) {
+export default function Pokemon({ pokemon, open, onOpen }) {
   const [info, setInfo] = useState(null)
   const supabase = useSupabaseClient()
   const session = useSession()
   const [isCollected, setIsCollected] = useState(false)
   const size = open ? 200 : 100
-
-  useEffect(() => {
-    if(checked) setIsCollected(checked.is_collected)
-  }, [checked])
 
   useEffect(() => {
     if(pokemon.url) {
@@ -25,6 +21,20 @@ export default function Pokemon({ pokemon, open, onOpen, checked }) {
       })
     }
   }, [pokemon])
+
+  useEffect(() => {
+    if(session) getCheck()
+  }, [])
+
+  async function getCheck() {
+    const { data } = await supabase
+      .from('pokemon')
+      .select('is_collected')
+      .eq('user_id', session.user.id)
+      .eq('name', pokemon.name)
+
+    setIsCollected(data[0].is_collected)
+  }
 
   function padZero(id) {
     if(id <= 9) {
@@ -37,10 +47,6 @@ export default function Pokemon({ pokemon, open, onOpen, checked }) {
   }
 
   async function updateCheck() {
-    // console.log(pokemon.name)
-    // console.log(isCollected)
-    // console.log(checked.id)
-
     try {
       const updates = checked ? {
         id: checked.id,
@@ -59,7 +65,6 @@ export default function Pokemon({ pokemon, open, onOpen, checked }) {
         .select('is_collected')
 
       if (error) throw error
-      // alert('Checks updated!')
 
       if(data) setIsCollected(data[0].is_collected)
     } catch (error) {
@@ -69,7 +74,7 @@ export default function Pokemon({ pokemon, open, onOpen, checked }) {
   } 
 
   return (
-    <li 
+    <Box 
       className={`${styles.card} ${!open ? styles.open : ""}`} 
       onClick={(e) => {
         e.target.type === "checkbox" ? (
@@ -150,27 +155,6 @@ export default function Pokemon({ pokemon, open, onOpen, checked }) {
           <></>
         )}
       </Box>
-
-      {/* {open ? (
-        <Box 
-          className={styles.row} 
-          sx={{ justifyContent: "space-evenly" }}
-        >
-          {info ? (
-            info.types.map((type) => (
-              <Chip 
-                key={type.type.name}
-                label={type.type.name} 
-                variant="outlined" 
-              />
-            ))
-          ) : (
-            <></>
-          )}
-        </Box>
-      ) : (
-        <></>
-      )} */}
-    </li>
+    </Box>
   )
 }

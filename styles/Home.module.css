@@ -1,5 +1,4 @@
 .container {
-  /* padding: 0 2rem; */
   padding: 0;
 }
 
@@ -38,30 +37,6 @@
   flex-grow: 1;
 }
 
-/* .header .title svg {
-  height: 2rem; 
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.header .title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-} */
-
 .logo {
   width: fit-content;
   display: flex;
@@ -84,11 +59,15 @@
 .list {
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 360px;
+  height: 360px;
+  overflow-y: scroll;
 }
 
 .swiper {
   width: 100%;
+  text-align: center;
+  overflow: hidden;
 }
 
 .slide {
